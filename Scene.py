@@ -56,39 +56,20 @@ class Base10Anim(Scene):
 
         runningNum = 0
 
-        block1 = CreateNumberBlock(1)
-        block2 = CreateNumberBlock(2)
-        block3 = CreateNumberBlock(3)
-        block4 = CreateNumberBlock(4)
-        block5 = CreateNumberBlock(5)
-        block6 = CreateNumberBlock(6)
-        block7 = CreateNumberBlock(7)
-        block8 = CreateNumberBlock(8)
-        block9 = CreateNumberBlock(9)
+        blocks = [CreateNumberBlock(number) for number in range(1, 10)]
 
-        block2.next_to(block1, RIGHT)
-        block3.next_to(block2, RIGHT)
+        blocks[1].next_to(blocks[0], RIGHT)
+        blocks[2].next_to(blocks[1], RIGHT)
 
-        block4.next_to(block1, DOWN)
-        block5.next_to(block4, RIGHT)
-        block6.next_to(block5, RIGHT)
+        blocks[3].next_to(blocks[0], DOWN)
+        blocks[4].next_to(blocks[3], RIGHT)
+        blocks[5].next_to(blocks[4], RIGHT)
 
-        block7.next_to(block4, DOWN)
-        block8.next_to(block7, RIGHT)
-        block9.next_to(block8, RIGHT)
+        blocks[6].next_to(blocks[3], DOWN)
+        blocks[7].next_to(blocks[6], RIGHT)
+        blocks[8].next_to(blocks[7], RIGHT)
 
-        blocks = [
-            block1, block2, block3,
-            block4, block5, block6,
-            block7, block8, block9
-        ]
-
-        blocksGroup = VGroup(
-            block1, block2, block3,
-            block4, block5, block6,
-            block7, block8, block9
-        ).center().scale(0.75)
-
+        blocksGroup = VGroup(*blocks).center().scale(0.75)
 
         anims = [FadeIn(block, shift=UP) for block in blocks]
         self.play(LaggedStart(*anims))
@@ -99,7 +80,6 @@ class Base10Anim(Scene):
             runningNum += randNum
             self.play(Indicate(blocks[randNum]))
         """
-
         anims = [block.animate.scale(0.5) for block in blocks]
         self.play(LaggedStart(*anims))
         self.play(LaggedStart(*[block.animate.scale(2) for block in blocks]))
